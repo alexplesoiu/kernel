@@ -19,6 +19,14 @@ custom_interrupt:
 	int 0x10
 	iret
 
+interrupt_one:
+	mov ah, 0eh
+	mov al, '1'
+	mov bl, 02h
+	int 0x10
+	iret
+
+
 step2:
 	cli 										; Clear Interrupts
 	; SETTING SEGMENTS TO 0x7c0
@@ -33,8 +41,10 @@ step2:
 	; SETTING THE INTERRUPT VECTOR TABLE
 	mov word[ss:0x00], custom_interrupt
 	mov word[ss:0x02], 0x7c0
-	
-	int 0x00 ; CALL OUR CUSTOM INTERRUPT
+	mov word[ss:0x04], interrupt_one
+	mov word[ss:0x06], 0x7c0
+
+	int 0x01 ; CALL OUR CUSTOM INTERRUPT
 
 	mov si, message 				; Load into si register, 'message' start address	
 	call print 							; Call Print Function
