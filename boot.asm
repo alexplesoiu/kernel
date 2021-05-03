@@ -69,5 +69,5 @@ error_message: db 'Failed to load sector', 0
 times 510 - ($ - $$) db 0 ; Minimum 510 Bytes
 dw 0xAA55	; Set Bootloader Signature
 
-buffer:
+buffer: ; Used reading in the ram on next sector
 
